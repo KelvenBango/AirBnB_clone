@@ -67,5 +67,8 @@ class test_basemodel(unittest.TestCase):
         self.assertEqual(model.created_at, datetime(2024, 3, 31, 12, 0))
         self.assertEqual(model.updated_at, datetime(2024, 3, 31, 12, 0))
 
+    def test_save():
+        pass
+
 if __name__ == "__main__":
     unittest.main()
