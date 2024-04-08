@@ -1,16 +1,12 @@
 #!/usr/bin/python3
-"""This module provides a class FileStorage that serializes instances to a JSON
-and desirializes JSON file to instances"""
+"""This module defines a class to manage file storage for hbnb clone"""
 import json
-import os
 
 
 class FileStorage:
-    """class FileStorage that serializes instances to a JSON file and
-    deserializes JSON file to instances"""
-
+    """This class manages storage of hbnb models in JSON format"""
     __file_path = 'file.json'
-    __objects: {}
+    __objects = {}
 
     def all(self):
         """Returns a dictionary of models currently in storage"""
@@ -22,12 +18,12 @@ class FileStorage:
 
     def save(self):
         """Saves storage dictionary to file"""
-        with open(FileSTorage.__file_path, 'w') as f:
+        with open(FileStorage.__file_path, 'w') as f:
             temp = {}
-            temp.update(FileSTorage.objects)
+            temp.update(FileStorage.__objects)
             for key, val in temp.items():
                 temp[key] = val.to_dict()
-                json.dump(temp, f)
+            json.dump(temp, f)
 
     def reload(self):
         """Loads storage dictionary from file"""
@@ -40,16 +36,15 @@ class FileStorage:
         from models.review import Review
 
         classes = {
-                'BaseModel': BaseModel,'User': User, 'Place': Place,
-                'State': State, 'City': City, 'Amenity': Amenity,
-                'Review': Review
-                }
-
-       try:
-           temp = {}
-           with open(FileStorage.__file_path, 'r') as f:
-               temp = json.load(f)
-               for key, val in temp.items():
-                   self.all()[key] = classes[val['__class__']](**val)
-       except FileNotFoundError:
-           pass
+                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
+                    'State': State, 'City': City, 'Amenity': Amenity,
+                    'Review': Review
+                  }
+        try:
+            temp = {}
+            with open(FileStorage.__file_path, 'r') as f:
+                temp = json.load(f)
+                for key, val in temp.items():
+                        self.all()[key] = classes[val['__class__']](**val)
+        except FileNotFoundError:
+            pass
